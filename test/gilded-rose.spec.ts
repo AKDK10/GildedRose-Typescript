@@ -44,11 +44,18 @@ describe('Gilded Rose', function () {
         console.log("]");
         expect(items).to.deep.equal(goldenRecord);
 
-
         
+    });
+
+   
+    //should not decrease quality by 1 for sulfuras
+    it('should not decrease quality', function() {
+        const gildedRose = new GildedRose([ new Item('Sulfuras, Hand of Ragnaros', 6, 49)] );
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).to.equal(49);
     });
 
     
 
-
+   
 });
