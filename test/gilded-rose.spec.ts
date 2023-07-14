@@ -48,14 +48,41 @@ describe('Gilded Rose', function () {
     });
 
    
-    //should not decrease quality by 1 for sulfuras
+    //should not decrease quality  for sulfuras
     it('should not decrease quality', function() {
         const gildedRose = new GildedRose([ new Item('Sulfuras, Hand of Ragnaros', 6, 49)] );
         const items = gildedRose.updateQuality();
         expect(items[0].quality).to.equal(49);
     });
 
-    
+    //should increase quality for 'Backstage passes to a TAFKAL80ETC concert'
+    // it('should increase quality', function() {
+    //     const gildedRose = new GildedRose([ new Item('Backstage passes to a TAFKAL80ETC concert', 6, 49)] );
+    //     const items = gildedRose.updateQuality();
+    //     expect(items[0].quality).to.equal(49);
+    // });
+
+
+    //item quality should not increase above 50 unless "Sulfuras"
+    it.only('should not be greater than 50', function() {
+        let maxQlty = 51;
+        const gildedRose = new GildedRose([ new Item('Sulfuras, Hand of Ragnaros', 5, 34), new Item('Aged Brie', 0, 2),
+        new Item('Aged Brie', 3,50),
+        new Item('Backstage passes', 4, 50),
+        new Item('Backstage passes', 3, 6)]
+        );
+        const items = gildedRose.updateQuality();
+
+        for (let item of items){
+            console.log(`new Item(${item.name}, ${item.sellIn}, ${item.quality})`)
+            if(item.name !== 'Sulfuras, Hand of Ragnaros'){
+                expect(item.quality).to.lessThan(maxQlty);
+                
+            }
+        }
+        
+        
+    });
 
    
 });
